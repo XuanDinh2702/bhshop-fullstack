@@ -1,0 +1,133 @@
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a routerLink="/">Trang chủ</a> &gt;
+  <a routerLink="/articles">Bài viết</a> &gt;
+  <span>Chi tiết</span>
+</div>
+
+@if (currentArticle(); as article) {
+<article class="article-detail">
+  <!-- COVER IMAGE -->
+  <div class="detail-header-img">
+    <img [src]="article.image" [alt]="article.title">
+    <span class="detail-category">{{ article.category }}</span>
+  </div>
+
+  <!-- ARTICLE HEADER -->
+  <header class="detail-info-header">
+    <div class="detail-meta">
+      <span>📅 {{ article.createdAt }}</span>
+      <span>⏱ {{ article.readTime }}</span>
+      <span>👁 {{ article.views }} lượt xem</span>
+    </div>
+
+    <h1 class="detail-title">{{ article.title }}</h1>
+
+    <div class="author-bar">
+      <div class="author-avatar">👩‍🌾</div>
+      <div class="author-text">
+        <span class="author-name">{{ article.author }}</span>
+        <span class="author-role">Chuyên gia cắm hoa nghệ thuật BHShop</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HIGHLIGHT SUMMARY -->
+  <div class="detail-lead">
+    {{ article.summary }}
+  </div>
+
+  <!-- VIDEO EMBED (NẾU CÓ) -->
+  @if (article.videoUrl) {
+  <div class="detail-video-box">
+    <div class="video-label">🎬 Video Trải Nghiệm & Hướng Dẫn Thực Hành</div>
+    <div class="video-mockup-player">
+      <div class="player-icon">▶</div>
+      <p class="player-tip">Đang phát trực tiếp video hướng dẫn cùng Florist</p>
+      <span class="player-duration">Thời lượng: {{ article.videoDuration }}</span>
+    </div>
+  </div>
+  }
+
+  <!-- MAIN CONTENT -->
+  <div class="detail-content">
+    <div class="content-body">
+      {{ article.content }}
+    </div>
+
+    <!-- SHARE BAR -->
+    <div class="share-box">
+      <span>Chia sẻ bài viết:</span>
+      <div class="share-buttons">
+        <button class="btn-share fb">📘 Facebook</button>
+        <button class="btn-share zalo">💬 Zalo</button>
+        <button class="btn-share copy">🔗 Copy Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMENTS SECTION -->
+  <section class="comments-section">
+    <h3>Bình luận & Chia sẻ trải nghiệm ({{ comments().length }})</h3>
+
+    <!-- ADD COMMENT FORM -->
+    <div class="comment-form">
+      <input
+        type="text"
+        placeholder="Tên của bạn..."
+        [ngModel]="newCommentName()"
+        (ngModelChange)="newCommentName.set($event)"
+      />
+      <textarea
+        placeholder="Chia sẻ cảm nghĩ hoặc câu hỏi của bạn về cách cắm hoa..."
+        rows="3"
+        [ngModel]="newCommentContent()"
+        (ngModelChange)="newCommentContent.set($event)"
+      ></textarea>
+      <button class="btn-submit-comment" (click)="addComment()">Gửi bình luận</button>
+
+      @if (commentSubmitted()) {
+        <div class="comment-success">✨ Cảm ơn bạn đã đóng góp bình luận!</div>
+      }
+    </div>
+
+    <!-- COMMENTS LIST -->
+    <div class="comments-list">
+      @for (c of comments(); track c.name + c.date) {
+      <div class="comment-item">
+        <div class="comment-avatar">{{ c.avatar }}</div>
+        <div class="comment-body">
+          <div class="comment-header">
+            <strong>{{ c.name }}</strong>
+            <span class="comment-date">{{ c.date }}</span>
+          </div>
+          <p class="comment-text">{{ c.content }}</p>
+        </div>
+      </div>
+      }
+    </div>
+  </section>
+
+  <!-- RELATED ARTICLES -->
+  <section class="related-section">
+    <h3>📖 Bài viết liên quan</h3>
+    <div class="related-list">
+      @for (rel of relatedArticles(); track rel.id) {
+      <a [routerLink]="['/article', rel.id]" class="related-item">
+        <img [src]="rel.image" [alt]="rel.title">
+        <div class="related-info">
+          <span class="rel-tag">{{ rel.category }}</span>
+          <h4>{{ rel.title }}</h4>
+          <span class="rel-date">📅 {{ rel.createdAt }}</span>
+        </div>
+      </a>
+      }
+    </div>
+  </section>
+
+  <!-- BACK BUTTON -->
+  <div class="back-footer">
+    <a routerLink="/articles" class="btn-back">← Quay lại danh sách bài viết</a>
+  </div>
+</article>
+}

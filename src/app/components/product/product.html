@@ -1,0 +1,97 @@
+<!-- TOAST THÔNG BÁO -->
+@if (cartService.toastMessage(); as msg) {
+  <div class="toast-notification">
+    🛒 {{ msg }}
+  </div>
+}
+
+@if (product(); as prod) {
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a routerLink="/">Trang chủ</a> &gt;
+    <a routerLink="/products">Sản phẩm</a> &gt;
+    <span>{{ prod.name }}</span>
+  </div>
+
+  <article class="product-detail">
+    <!-- IMAGE -->
+    <div class="detail-image">
+      <img [src]="prod.image" [alt]="prod.name">
+      @if (prod.discount > 0) {
+        <span class="label label-sale">-{{ prod.discount }}%</span>
+      } @else if (prod.badge) {
+        <span class="label {{ prod.badgeClass }}">{{ prod.badge }}</span>
+      }
+    </div>
+
+    <!-- CONTENT -->
+    <div class="detail-info">
+      <h1 class="detail-title">{{ prod.name }}</h1>
+      
+      <div class="detail-price-box">
+        <span class="price">{{ prod.price }}</span>
+        @if (prod.discount > 0) {
+          <span class="old-price">{{ prod.oldPrice }}</span>
+          <span class="discount-badge">-{{ prod.discount }}%</span>
+        }
+      </div>
+
+      <p class="detail-desc">
+        {{ prod.description || 'Bó hoa tươi nghệ thuật được thiết kế chỉn chu bởi nghệ nhân hoa BHShop, sử dụng 100% hoa tươi nhập khẩu trong ngày.' }}
+      </p>
+
+      <div class="detail-features">
+        <div class="item">🌸 Hoa tươi chọn lọc 100% nhập mới trong ngày</div>
+        <div class="item">💌 Tặng kèm thiệp chúc mừng thiết kế riêng</div>
+        <div class="item">🚚 Giao nhanh hỏa tốc 60 phút nội thành</div>
+      </div>
+
+      <!-- BỘ CHỌN SỐ LƯỢNG MUA -->
+      <div class="quantity-box">
+        <span class="qty-label">Số lượng:</span>
+        <div class="qty-controls">
+          <button type="button" class="btn-qty" (click)="decreaseQty()">-</button>
+          <span class="qty-num">{{ quantity() }}</span>
+          <button type="button" class="btn-qty" (click)="increaseQty()">+</button>
+        </div>
+      </div>
+
+      <!-- HÀNH ĐỘNG MUA -->
+      <div class="detail-actions">
+        <button type="button" class="btn-cart" (click)="addToCart()">
+          🛒 Thêm vào giỏ
+        </button>
+        <button type="button" class="btn-buy-now" (click)="buyNow()">
+          Mua ngay
+        </button>
+      </div>
+
+      <!-- SẢN PHẨM LIÊN QUAN -->
+      @if (relatedProducts().length > 0) {
+        <div class="related-section">
+          <h3>🌹 Có thể bạn cũng thích</h3>
+          <div class="related-grid">
+            @for (rel of relatedProducts(); track rel.id) {
+              <a [routerLink]="['/product', rel.slug]" class="related-card">
+                <img [src]="rel.image" [alt]="rel.name">
+                <div class="rel-info">
+                  <div class="rel-title">{{ rel.name }}</div>
+                  <div class="rel-price">{{ rel.price }}</div>
+                </div>
+              </a>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="back-link">
+        <a routerLink="/products">← Xem thêm hoa khác</a>
+      </div>
+    </div>
+  </article>
+} @else {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Đang tải thông tin sản phẩm...</p>
+  </div>
+}

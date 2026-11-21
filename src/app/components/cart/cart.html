@@ -1,0 +1,87 @@
+<div class="breadcrumb">
+  <a routerLink="/">Trang chủ</a> &gt; <span>Giỏ hàng</span>
+</div>
+
+<div class="cart-container">
+  <h2>
+    🛒 Giỏ hàng của bạn
+    @if (cartService.cartCount() > 0) {
+      <span class="count-tag">({{ cartService.cartCount() }} món)</span>
+    }
+  </h2>
+
+  @if (cartService.cartItems().length > 0) {
+    <!-- DANH SÁCH MÓN TRONG GIỎ -->
+    <div class="cart-items-list">
+      @for (item of cartService.cartItems(); track item.product.id) {
+        <div class="cart-item">
+          <a [routerLink]="['/product', item.product.slug]">
+            <img [src]="item.product.image" [alt]="item.product.name" class="cart-thumb">
+          </a>
+
+          <div class="item-info">
+            <h3 class="item-title">
+              <a [routerLink]="['/product', item.product.slug]">{{ item.product.name }}</a>
+            </h3>
+            <div class="item-price">{{ item.product.price }}</div>
+
+            <!-- TĂNG GIẢM SỐ LƯỢNG -->
+            <div class="quantity-control">
+              <button class="btn-qty-sm" (click)="decreaseQty(item.product.id, item.quantity)">-</button>
+              <span class="qty-val">{{ item.quantity }}</span>
+              <button class="btn-qty-sm" (click)="increaseQty(item.product.id, item.quantity)">+</button>
+            </div>
+          </div>
+
+          <button class="btn-remove" (click)="removeItem(item.product.id)" title="Xóa món này">
+            ✕
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- TỔNG KẾT & THANH TOÁN -->
+    <div class="cart-summary">
+      <div class="row">
+        <span>Tạm tính</span>
+        <span>{{ cartService.formattedTotal() }}</span>
+      </div>
+      <div class="row">
+        <span>Phí vận chuyển</span>
+        <span class="free">Miễn phí giao nhanh</span>
+      </div>
+      <div class="total-row">
+        <span>Tổng cộng</span>
+        <span class="total-price">{{ cartService.formattedTotal() }}</span>
+      </div>
+
+      <button class="btn-checkout" (click)="checkout()">
+        Tiến hành thanh toán
+      </button>
+      <a routerLink="/products" class="btn-continue">
+        ← Tiếp tục chọn thêm hoa
+      </a>
+    </div>
+
+  } @else {
+    <!-- TRẠNG THÁI GIỎ HÀNG TRỐNG -->
+    <div class="empty-cart">
+      <div class="empty-cart-icon">🛒</div>
+      <h3>Giỏ hàng của bạn đang trống</h3>
+      <p>Hãy khám phá các mẫu hoa tươi tuyệt đẹp và gửi trao yêu thương nhé!</p>
+      <a routerLink="/products" class="btn-shop-now">Khám phá hoa tươi ngay →</a>
+    </div>
+  }
+</div>
+
+<!-- MODAL ĐẶT HÀNG THÀNH CÔNG -->
+@if (checkoutSuccess()) {
+  <div class="modal-backdrop" (click)="closeSuccess()">
+    <div class="modal-dialog" (click)="$event.stopPropagation()">
+      <div class="success-icon">🎉</div>
+      <h2>Đặt Hàng Thành Công!</h2>
+      <p>Cảm ơn bạn đã tin chọn BHShop. Chúng tôi đã nhận được đơn hàng và sẽ liên hệ giao hoa trong 60 phút.</p>
+      <button class="btn-close-success" (click)="closeSuccess()">Tiếp tục mua sắm</button>
+    </div>
+  </div>
+}

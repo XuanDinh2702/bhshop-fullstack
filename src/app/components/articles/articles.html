@@ -1,0 +1,254 @@
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a routerLink="/">Trang chủ</a> &gt; <span>Bài viết & Trải nghiệm</span>
+</div>
+
+<!-- PAGE HEADER -->
+<section class="page-heading">
+  <h1>Góc Cẩm Nang & Trải Nghiệm 📖🎬</h1>
+  <p>
+    Khám phá bí quyết chăm hoa, ý nghĩa các loài hoa tươi và chuỗi video workshop cắm hoa nghệ thuật tại BHShop.
+  </p>
+</section>
+
+<!-- SEARCH BAR & CATEGORIES -->
+<section class="filter-wrapper">
+  <!-- SEARCH INPUT -->
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input
+      type="text"
+      placeholder="Tìm kiếm bài viết, video, bí quyết..."
+      [ngModel]="searchQuery()"
+      (ngModelChange)="searchQuery.set($event)"
+    />
+    @if (searchQuery()) {
+      <button class="btn-clear" (click)="searchQuery.set('')">✕</button>
+    }
+  </div>
+
+  <!-- CATEGORY PILLS -->
+  <div class="category-pills">
+    @for (cat of categories; track cat) {
+      <button
+        class="category-pill"
+        [class.active]="selectedCategory() === cat"
+        (click)="filterByCategory(cat)">
+        {{ cat }}
+      </button>
+    }
+  </div>
+</section>
+
+<!-- VIDEO SHOWCASE (TRẢI NGHIỆM VIDEO CẮM HOA) -->
+@if (selectedCategory() === 'Tất cả' || selectedCategory() === 'Trải nghiệm video') {
+<section class="video-section">
+  <div class="section-title-row">
+    <div>
+      <h2 class="section-title">🎬 Video Trải Nghiệm Thực Tế</h2>
+      <p class="section-sub">Tự tay học cắm hoa và hòa mình cùng Workshop cuối tuần</p>
+    </div>
+  </div>
+
+  <div class="video-grid">
+    @for (vid of videoArticles(); track vid.id) {
+    <div class="video-card" (click)="openVideo(vid.videoUrl)">
+      <div class="video-thumbnail">
+        <img [src]="vid.image" [alt]="vid.title">
+        <div class="play-overlay">
+          <span class="play-btn">▶</span>
+        </div>
+        <span class="duration-badge">⏱ {{ vid.videoDuration }}</span>
+      </div>
+      <div class="video-info">
+        <h4 class="video-title">{{ vid.title }}</h4>
+        <div class="video-meta">
+          <span>✍ {{ vid.author }}</span>
+          <span>👁 {{ vid.views }} lượt xem</span>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+}
+
+<!-- FEATURED ARTICLE -->
+@if (featuredArticle() && !searchQuery() && selectedCategory() === 'Tất cả') {
+<section class="featured-section">
+  <div class="featured-card">
+    <div class="featured-img-wrap">
+      <img [src]="featuredArticle().image" [alt]="featuredArticle().title">
+      <span class="featured-badge">⭐ BÀI VIẾT NỔI BẬT</span>
+    </div>
+    <div class="featured-content">
+      <div class="featured-meta">
+        <span class="cat-tag">{{ featuredArticle().category }}</span>
+        <span>📅 {{ featuredArticle().createdAt }}</span>
+        <span>⏱ {{ featuredArticle().readTime }}</span>
+      </div>
+      <h2 class="featured-title">
+        <a [routerLink]="['/bai_viet', featuredArticle().slug || featuredArticle().id]">{{ featuredArticle().title }}</a>
+      </h2>
+      <p class="featured-summary">{{ featuredArticle().summary }}</p>
+      <div class="featured-footer">
+        <span class="author-info">✍ Tác giả: {{ featuredArticle().author }}</span>
+        <div class="featured-actions">
+          <button class="btn-quick-read" (click)="openModal(featuredArticle())">Đọc nhanh</button>
+          <a [routerLink]="['/bai_viet', featuredArticle().slug || featuredArticle().id]" class="btn-full-read">Chi tiết →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+}
+
+<!-- ALL ARTICLES LIST -->
+<section class="articles-section">
+  <div class="section-title-row">
+    <div>
+      <h2 class="section-title">
+        📚 Danh Sách Bài Viết
+        <span class="counter-badge">({{ filteredArticles().length }})</span>
+      </h2>
+      @if (selectedCategory() !== 'Tất cả') {
+        <p class="section-sub">Đang lọc theo: <strong>{{ selectedCategory() }}</strong></p>
+      }
+    </div>
+  </div>
+
+  <div class="articles-grid">
+    @for (article of filteredArticles(); track article.id) {
+    <article class="article-box">
+      <div class="article-box-image">
+        <img [src]="article.image" [alt]="article.title">
+        <span class="box-category">{{ article.category }}</span>
+        @if (article.videoUrl) {
+          <span class="box-video-tag" (click)="$event.stopPropagation(); openVideo(article.videoUrl)">
+            ▶ Video
+          </span>
+        }
+      </div>
+
+      <div class="article-box-content">
+        <div class="article-box-meta">
+          <span>📅 {{ article.createdAt }}</span>
+          <span>⏱ {{ article.readTime }}</span>
+          <span>👁 {{ article.views }}</span>
+        </div>
+
+        <h3 class="article-box-title">
+          <a [routerLink]="['/bai_viet', article.slug || article.id]">{{ article.title }}</a>
+        </h3>
+
+        <p class="article-box-summary">{{ article.summary }}</p>
+
+        <div class="article-box-footer">
+          <span class="box-author">✍ {{ article.author }}</span>
+          <div class="box-btns">
+            <button class="btn-box-quick" (click)="openModal(article)">Đọc nhanh</button>
+            <a [routerLink]="['/bai_viet', article.slug || article.id]" class="btn-box-detail">Chi tiết →</a>
+          </div>
+        </div>
+      </div>
+    </article>
+    } @empty {
+    <div class="empty-state">
+      <div class="empty-icon">🍃</div>
+      <h3>Không tìm thấy bài viết nào</h3>
+      <p>Thử tìm với từ khóa khác hoặc chuyển sang danh mục "Tất cả" nhé!</p>
+      <button class="btn-reset" (click)="searchQuery.set(''); selectedCategory.set('Tất cả')">
+        Xem tất cả bài viết
+      </button>
+    </div>
+    }
+  </div>
+</section>
+
+<!-- NEWSLETTER SUBSCRIBE -->
+<section class="newsletter-section">
+  <div class="newsletter-card">
+    <div class="newsletter-icon">💌</div>
+    <h3>Đăng Ký Nhận Cẩm Nang Hoa Tươi</h3>
+    <p>Nhận ngay những bí quyết chăm sóc hoa, video hướng dẫn cắm hoa mới nhất và voucher giảm giá 15% mỗi tháng!</p>
+    
+    @if (subscribeSuccess()) {
+      <div class="subscribe-alert">
+        🎉 Cảm ơn bạn! BHShop đã gửi cẩm nang đầu tiên vào hòm thư của bạn.
+      </div>
+    } @else {
+      <div class="newsletter-form">
+        <input
+          type="email"
+          placeholder="Nhập địa chỉ email của bạn..."
+          [ngModel]="subscriberEmail()"
+          (ngModelChange)="subscriberEmail.set($event)"
+          (keyup.enter)="onSubscribe()"
+        />
+        <button class="btn-subscribe" (click)="onSubscribe()">Đăng Ký</button>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- QUICK READ MODAL -->
+@if (activeModalArticle()) {
+<div class="modal-backdrop" (click)="closeModal()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <button class="modal-close" (click)="closeModal()">✕</button>
+    <div class="modal-header-img">
+      <img [src]="activeModalArticle()!.image" [alt]="activeModalArticle()!.title">
+      <span class="modal-badge">{{ activeModalArticle()!.category }}</span>
+    </div>
+    <div class="modal-content">
+      <div class="modal-meta">
+        <span>📅 {{ activeModalArticle()!.createdAt }}</span>
+        <span>⏱ {{ activeModalArticle()!.readTime }}</span>
+        <span>✍ {{ activeModalArticle()!.author }}</span>
+      </div>
+      <h2 class="modal-title">{{ activeModalArticle()!.title }}</h2>
+      <div class="modal-body-text">
+        <p class="lead-summary"><em>{{ activeModalArticle()!.summary }}</em></p>
+        <div class="full-content-paragraphs">
+          {{ activeModalArticle()!.content }}
+        </div>
+      </div>
+      <div class="modal-footer-actions">
+        <button class="btn-close-modal" (click)="closeModal()">Đóng lại</button>
+        <a
+          [routerLink]="['/bai_viet', activeModalArticle()!.slug || activeModalArticle()!.id]"
+          class="btn-go-full"
+          (click)="closeModal()">
+          Xem trang đầy đủ & bình luận →
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+}
+
+<!-- VIDEO MODAL -->
+@if (activeVideoUrl()) {
+<div class="modal-backdrop" (click)="closeVideo()">
+  <div class="video-modal-dialog" (click)="$event.stopPropagation()">
+    <button class="modal-close" (click)="closeVideo()">✕</button>
+    <div class="video-player-frame">
+      <div class="simulated-player">
+        <div class="video-banner-header">
+          <span>🎬 Trải Nghiệm Video BHShop Flower Workshop</span>
+        </div>
+        <div class="player-center">
+          <div class="big-play-pulse">▶</div>
+          <p class="player-title">Đang phát video trải nghiệm chất lượng 1080p Full HD</p>
+          <p class="player-subtitle">Học cắm hoa trực tiếp cùng nghệ nhân hoa chuyên nghiệp</p>
+        </div>
+        <div class="player-controls">
+          <span>▶ Phát/Tạm dừng</span>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+          <span>🔊 100%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}

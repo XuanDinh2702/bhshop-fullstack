@@ -1,0 +1,139 @@
+<!-- TOAST THÔNG BÁO MUA HÀNG -->
+@if (cartService.toastMessage(); as msg) {
+  <div class="toast-notification">
+    🛒 {{ msg }}
+  </div>
+}
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a routerLink="/">Trang chủ</a> &gt;
+  <a routerLink="/products">Sản phẩm</a>
+  @if (currentCategorySlug() !== 'tat-ca') {
+    &gt; <span>{{ currentCategorySlug() }}</span>
+  }
+</div>
+
+<!-- PAGE TITLE -->
+<section class="page-heading">
+  @if (currentSearch()) {
+    <h1>Kết quả tìm kiếm cho "{{ currentSearch() }}" 🔍</h1>
+    <p>Tìm thấy {{ products().length }} bó hoa phù hợp</p>
+  } @else {
+    <h1>Khám phá hoa tươi 🌷</h1>
+    <p>Chọn những bó hoa xinh đẹp nhất dành cho người bạn yêu thương</p>
+  }
+</section>
+
+<!-- DANH MỤC SCROLL NGANG (DYNAMIC THEO SLUG TỪ API) -->
+<section class="category-section">
+  <h2 class="category-title">Danh mục hoa</h2>
+
+  <div class="category-scroll">
+    @for (cat of categories(); track cat.id) {
+      <a
+        [routerLink]="cat.slug === 'tat-ca' ? '/products' : ['/category', cat.slug]"
+        class="category-item"
+        [class.active]="currentCategorySlug() === cat.slug">
+        {{ cat.icon }} {{ cat.name }}
+      </a>
+    }
+  </div>
+</section>
+
+<!-- BỘ LỌC SẮP XẾP -->
+<section class="filter-section">
+  <div class="filter-title">Sắp xếp theo</div>
+
+  <div class="filter-options">
+    <div class="filter-option">
+      <input
+        type="radio"
+        id="sort-newest"
+        name="sort"
+        [checked]="currentSort() === 'newest'"
+        (change)="onSortChange('newest')">
+      <label for="sort-newest">✨ Mới nhất</label>
+    </div>
+
+    <div class="filter-option">
+      <input
+        type="radio"
+        id="sort-bestseller"
+        name="sort"
+        [checked]="currentSort() === 'bestseller'"
+        (change)="onSortChange('bestseller')">
+      <label for="sort-bestseller">🔥 Bán chạy</label>
+    </div>
+
+    <div class="filter-option">
+      <input
+        type="radio"
+        id="sort-sale"
+        name="sort"
+        [checked]="currentSort() === 'sale'"
+        (change)="onSortChange('sale')">
+      <label for="sort-sale">🏷️ Giảm giá</label>
+    </div>
+
+    <div class="filter-option">
+      <input
+        type="radio"
+        id="sort-price-asc"
+        name="sort"
+        [checked]="currentSort() === 'price-asc'"
+        (change)="onSortChange('price-asc')">
+      <label for="sort-price-asc">💵 Giá tăng</label>
+    </div>
+  </div>
+</section>
+
+<!-- DANH SÁCH SẢN PHẨM (GRID) -->
+<section class="product-list-section">
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Đang tải dữ liệu hoa tươi...</p>
+    </div>
+  } @else {
+    <div class="product-grid">
+      @for (product of products(); track product.id) {
+        <article class="product-card">
+          <div class="product-image">
+            <a [routerLink]="['/product', product.slug]">
+              <img [src]="product.image" [alt]="product.name">
+            </a>
+            @if (product.discount > 0) {
+              <span class="label label-sale">-{{ product.discount }}%</span>
+            } @else if (product.badge) {
+              <span class="label {{ product.badgeClass }}">{{ product.badge }}</span>
+            }
+          </div>
+
+          <div class="product-info">
+            <h3 class="product-name">
+              <a [routerLink]="['/product', product.slug]">{{ product.name }}</a>
+            </h3>
+
+            <div class="price">{{ product.price }}</div>
+            <div class="old-price">{{ product.oldPrice }}</div>
+
+            <div class="product-actions">
+              <button (click)="buyProduct(product, $event)" class="btn-buy" title="Thêm vào giỏ">
+                🛒 Mua
+              </button>
+              <a [routerLink]="['/product', product.slug]" class="btn-detail">Chi tiết</a>
+            </div>
+          </div>
+        </article>
+      } @empty {
+        <div class="empty-products">
+          <div class="empty-icon">🥀</div>
+          <h3>Không tìm thấy sản phẩm nào</h3>
+          <p>Hiện không có bó hoa nào trong danh mục hoặc từ khóa này.</p>
+          <a routerLink="/products" class="btn-all-products">Xem tất cả hoa tươi →</a>
+        </div>
+      }
+    </div>
+  }
+</section>

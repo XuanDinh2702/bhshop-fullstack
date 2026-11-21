@@ -1,0 +1,84 @@
+<header class="header">
+  <div class="header-top">
+    <a routerLink="/" class="logo">
+      🌼 BH<span>Shop</span>
+    </a>
+    
+    <a routerLink="/cart" class="cart" aria-label="Giỏ hàng">
+      🛒
+      @if (cartService.cartCount() > 0) {
+        <span class="cart-badge">{{ cartService.cartCount() }}</span>
+      }
+    </a>
+  </div>
+
+  <!-- THANH TÌM KIẾM HEADER (MỨC KHÁ: KẾT NỐI API SEARCH) -->
+  <div class="search-container">
+    <form class="search" (submit)="onSearchSubmit($event)">
+      <input
+        type="search"
+        placeholder="Tìm bó hoa bạn yêu thích..."
+        [ngModel]="searchKeyword()"
+        (ngModelChange)="onSearchChange($event)"
+        (focus)="searchKeyword().trim() ? showDropdown.set(true) : null"
+      />
+      <button type="submit" class="btn-search-icon">🔍</button>
+    </form>
+
+    <!-- DROPDOWN KẾT QUẢ TÌM KIẾM NHANH TỪ API -->
+    @if (showDropdown() && searchKeyword().trim()) {
+      <div class="search-dropdown">
+        @if (isSearching()) {
+          <div class="dropdown-status">Đang tìm kiếm hoa tươi...</div>
+        } @else if (searchResults().length > 0) {
+          <div class="dropdown-list">
+            @for (item of searchResults(); track item.id) {
+              <div class="dropdown-item" (click)="selectProduct(item)">
+                <img [src]="item.image" [alt]="item.name" class="dropdown-thumb">
+                <div class="dropdown-info">
+                  <div class="dropdown-name">{{ item.name }}</div>
+                  <div class="dropdown-price">{{ item.price }}</div>
+                </div>
+              </div>
+            }
+          </div>
+          <div class="dropdown-footer" (click)="onSearchSubmit()">
+            Xem tất cả kết quả cho "{{ searchKeyword() }}" →
+          </div>
+        } @else {
+          <div class="dropdown-status">Không tìm thấy hoa phù hợp</div>
+        }
+      </div>
+    }
+  </div>
+</header>
+
+<nav class="nav">
+  <a
+    routerLink="/"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }">
+    Trang chủ
+  </a>
+
+  <a
+    routerLink="/products"
+    routerLinkActive="active">
+    Sản phẩm
+  </a>
+
+  <a
+    routerLink="/bai_viet"
+    routerLinkActive="active">
+    Bài viết
+  </a>
+
+  <a
+    routerLink="/cart"
+    routerLinkActive="active">
+    Giỏ hàng
+    @if (cartService.cartCount() > 0) {
+      ({{ cartService.cartCount() }})
+    }
+  </a>
+</nav>

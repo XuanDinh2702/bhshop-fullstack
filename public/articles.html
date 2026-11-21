@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orange Bloom - Bài Viết & Trải Nghiệm Hoa Tươi</title>
+
+  <style>
+    :root {
+      --orange: #f97316;
+      --orange-dark: #c2410c;
+      --orange-light: #fff0e5;
+      --cream: #fffaf5;
+      --text: #292524;
+      --muted: #78716c;
+      --border: #f1e5dc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #e8e8e8;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+    }
+
+    .website {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--cream);
+      box-shadow: 0 0 25px #00000012;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    /* HEADER */
+    .header {
+      background: white;
+      padding: 15px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #44403c;
+    }
+
+    .cart {
+      font-size: 22px;
+      background: var(--orange-light);
+      border-radius: 12px;
+      padding: 9px;
+    }
+
+    .search {
+      margin-top: 14px;
+    }
+
+    .search input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fafafa;
+      padding: 12px;
+      outline-color: var(--orange);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-around;
+      background: var(--orange);
+      padding: 12px 4px;
+      color: white;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .nav a {
+      color: white;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .nav a.active {
+      background: var(--orange-dark);
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      padding: 12px 14px 4px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .breadcrumb a {
+      color: var(--orange);
+      font-weight: 600;
+    }
+
+    /* PAGE HEADING */
+    .page-heading {
+      padding: 10px 14px 14px;
+    }
+
+    .page-heading h1 {
+      font-size: 20px;
+      margin: 0 0 6px;
+      font-weight: 800;
+    }
+
+    .page-heading p {
+      font-size: 12px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* FILTER WRAPPER */
+    .filter-wrapper {
+      padding: 0 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0 12px;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px 0;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .category-pills {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .category-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-pill {
+      flex-shrink: 0;
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 13px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .category-pill.active {
+      background: var(--orange);
+      color: white;
+      border-color: var(--orange);
+    }
+
+    /* VIDEO SHOWCASE */
+    .video-section {
+      padding: 12px 14px 18px;
+      background: #fff7ed;
+      border-top: 1px solid #ffedd5;
+      border-bottom: 1px solid #ffedd5;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 2px;
+    }
+
+    .section-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0 0 12px;
+    }
+
+    .video-grid {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+
+    .video-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .video-card {
+      flex: 0 0 240px;
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    }
+
+    .video-thumbnail {
+      position: relative;
+      width: 100%;
+      height: 135px;
+      background: #1c1917;
+    }
+
+    .video-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.88;
+    }
+
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-btn {
+      width: 40px;
+      height: 40px;
+      background: rgba(239, 68, 68, 0.92);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      padding-left: 3px;
+    }
+
+    .duration-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 6px;
+      border-radius: 6px;
+    }
+
+    .video-info {
+      padding: 10px 12px;
+    }
+
+    .video-title {
+      font-size: 13px;
+      margin: 0 0 6px;
+      font-weight: 700;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .video-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    /* ARTICLES LIST */
+    .articles-section {
+      padding: 0 14px 20px;
+    }
+
+    .articles-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .article-box {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .article-box-image {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      background: #fed7aa;
+    }
+
+    .article-box-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .box-category {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(249, 115, 22, 0.92);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 15px;
+    }
+
+    .box-video-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(220, 38, 38, 0.92);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 15px;
+    }
+
+    .article-box-content {
+      padding: 14px;
+    }
+
+    .article-box-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .article-box-title {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin: 0 0 6px;
+    }
+
+    .article-box-summary {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #57534e;
+      margin: 0 0 10px;
+    }
+
+    .article-box-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px dashed var(--border);
+      padding-top: 10px;
+    }
+
+    .box-author {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .btn-read-quick {
+      background: var(--orange-light);
+      color: var(--orange-dark);
+      border: none;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* MODAL */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(3px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-dialog {
+      background: white;
+      width: 100%;
+      max-width: 400px;
+      max-height: 85vh;
+      border-radius: 18px;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .modal-body {
+      padding: 16px;
+    }
+
+    .modal-title {
+      font-size: 17px;
+      margin: 0 0 10px;
+      font-weight: 800;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #374151;
+      white-space: pre-line;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #44403c;
+      color: white;
+      padding: 24px 18px 20px;
+      margin-top: auto;
+      font-size: 13px;
+    }
+
+    .footer h3 {
+      font-size: 18px;
+      margin: 0 0 10px;
+      color: var(--orange);
+    }
+
+    .footer p {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #d6d3d1;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+      font-size: 12px;
+    }
+
+    .copyright {
+      border-top: 1px solid #ffffff30;
+      padding-top: 15px;
+      text-align: center;
+      font-size: 11px;
+      color: #d6b7a8;
+    }
+  </style>
+</head>
+
+<body>
+<div class="website">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top">
+      <a href="home.html" class="logo">
+        🌼 Orange<span>Bloom</span>
+      </a>
+      <a href="#" class="cart" aria-label="Giỏ hàng">🛒</a>
+    </div>
+
+    <form class="search" action="#" onsubmit="return false;">
+      <input type="search" placeholder="Tìm bó hoa bạn yêu thích...">
+    </form>
+  </header>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="home.html">Trang chủ</a>
+    <a href="products.html">Sản phẩm</a>
+    <a href="articles.html" class="active">Bài viết</a>
+    <a href="home.html#contact">Liên hệ</a>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="home.html">Trang chủ</a> &gt; <span>Bài viết & Trải nghiệm</span>
+  </div>
+
+  <!-- PAGE HEADING -->
+  <section class="page-heading">
+    <h1>Cẩm Nang Hoa Tươi & Video Trải Nghiệm 📖🎬</h1>
+    <p>
+      Khám phá những mẹo chăm sóc hoa tươi lâu, ý nghĩa màu sắc hoa và chuỗi video workshop cắm hoa nghệ thuật tại Orange Bloom.
+    </p>
+  </section>
+
+  <!-- FILTER & SEARCH -->
+  <section class="filter-wrapper">
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" id="searchInput" placeholder="Tìm bài viết, mẹo cắm hoa, video...">
+    </div>
+
+    <div class="category-pills" id="categoryPills">
+      <button class="category-pill active" onclick="setCategory('Tất cả', this)">🌸 Tất cả</button>
+      <button class="category-pill" onclick="setCategory('Mẹo cắm hoa', this)">✂ Mẹo cắm hoa</button>
+      <button class="category-pill" onclick="setCategory('Ý nghĩa hoa', this)">💖 Ý nghĩa hoa</button>
+      <button class="category-pill" onclick="setCategory('Trải nghiệm video', this)">🎬 Trải nghiệm video</button>
+      <button class="category-pill" onclick="setCategory('Cẩm nang hoa', this)">🌿 Cẩm nang hoa</button>
+      <button class="category-pill" onclick="setCategory('Xu hướng quà tặng', this)">🎁 Quà tặng</button>
+    </div>
+  </section>
+
+  <!-- VIDEO SHOWCASE -->
+  <section class="video-section" id="videoSection">
+    <h2 class="section-title">🎬 Video Workshop & Trải Nghiệm</h2>
+    <p class="section-sub">Tự tay học cắm hoa và trải nghiệm không gian nghệ thuật</p>
+
+    <div class="video-grid">
+      <div class="video-card" onclick="openModalById(3)">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=800&auto=format&fit=crop" alt="Video cắm hoa">
+          <div class="play-overlay"><span class="play-btn">▶</span></div>
+          <span class="duration-badge">⏱ 06:45</span>
+        </div>
+        <div class="video-info">
+          <h4 class="video-title">Hướng dẫn tự tay bó hoa cưới cầm tay dáng tròn thanh lịch</h4>
+          <div class="video-meta">
+            <span>✍ Master Florist Hoàng An</span>
+            <span>👁 940 xem</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card" onclick="openModalById(5)">
+        <div class="video-thumbnail">
+          <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=800&auto=format&fit=crop" alt="Workshop cắm hoa">
+          <div class="play-overlay"><span class="play-btn">▶</span></div>
+          <span class="duration-badge">⏱ 04:15</span>
+        </div>
+        <div class="video-info">
+          <h4 class="video-title">Trải nghiệm Workshop cắm hoa nghệ thuật cuối tuần</h4>
+          <div class="video-meta">
+            <span>✍ BHShop Studio</span>
+            <span>👁 730 xem</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLES LIST -->
+  <section class="articles-section">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h2 class="section-title" id="listTitle">📚 Danh Sách Bài Viết (6)</h2>
+    </div>
+
+    <div class="articles-grid" id="articlesGrid">
+      <!-- Được render động bởi JavaScript -->
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="contact">
+    <h3>🌼 Orange Bloom</h3>
+    <p>
+      Gửi trao yêu thương qua từng đóa hoa.
+      Chúng tôi mang đến những bó hoa tươi đẹp
+      cho mọi khoảnh khắc đáng nhớ.
+    </p>
+    <div class="footer-links">
+      <a href="home.html">Trang chủ</a>
+      <a href="products.html">Sản phẩm</a>
+      <a href="articles.html">Bài viết</a>
+      <a href="#">Chính sách</a>
+    </div>
+    <div class="copyright">
+      © 2026 Orange Bloom. All rights reserved.
+    </div>
+  </footer>
+
+</div>
+
+<!-- QUICK READ MODAL POPUP -->
+<div class="modal-backdrop" id="articleModal" onclick="closeModal()">
+  <div class="modal-dialog" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <img src="" id="modalImg" class="modal-img" alt="">
+    <div class="modal-body">
+      <div style="font-size:11px; color:var(--muted); margin-bottom:6px;" id="modalMeta"></div>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <div class="modal-desc" id="modalDesc"></div>
+      <button style="margin-top:16px; width:100%; background:var(--orange); color:white; border:none; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="closeModal()">Đóng lại</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // MẢNG DỮ LIỆU ĐẦY ĐỦ (> 3 BÀI VIẾT)
+  const articlesList = [
+    {
+      id: 1,
+      title: 'Bí quyết giữ hoa hồng tươi lâu đến 2 tuần trong phòng khách',
+      summary: 'Những mẹo đơn giản từ cắt vát gốc 45 độ, pha nước ấm với chút đường và chanh giúp cành hoa luôn tràn đầy sức sống.',
+      content: 'Hoa hồng mang lại vẻ đẹp quý phái cho không gian sống. Để giữ hoa tươi hơn 2 tuần:\n1. Cắt vát 45 độ dưới vòi nước chảy.\n2. Pha nước ấm với 1/2 muỗng đường và vài giọt chanh.\n3. Tránh để hoa nơi có quạt gió mạnh hoặc cạnh hoa quả chín.\n4. Thay nước định kỳ mỗi sáng.',
+      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop',
+      category: 'Mẹo cắm hoa',
+      author: 'Florist Linh Trang',
+      createdAt: '2026-11-11',
+      readTime: '3 phút đọc'
+    },
+    {
+      id: 2,
+      title: 'Ý nghĩa sâu sắc của 5 loài hoa phổ biến trong lễ tốt nghiệp',
+      summary: 'Hoa hướng dương thể hiện niềm tin, cẩm tú cầu biểu trưng cho lòng biết ơn, còn hoa baby trắng nói lên sự khởi đầu trong trẻo.',
+      content: 'Lễ tốt nghiệp là cột mốc trưởng thành quan trọng:\n- Hoa Hướng Dương: Tượng trưng cho ý chí kiên định, luôn hướng về tương lai.\n- Hoa Baby Trắng: Vẻ đẹp thuần khiết, trong sáng của tuổi trẻ.\n- Hoa Cẩm Tú Cầu: Lòng biết ơn gửi đến thầy cô và gia đình.\n- Hoa Cát Tường: Lời chúc may mắn và hanh thông sự nghiệp.',
+      image: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=800&auto=format&fit=crop',
+      category: 'Ý nghĩa hoa',
+      author: 'Orange Bloom Team',
+      createdAt: '2026-11-10',
+      readTime: '4 phút đọc'
+    },
+    {
+      id: 3,
+      title: '[Video] Hướng dẫn tự tay bó hoa cưới cầm tay dáng tròn thanh lịch',
+      summary: 'Từng bước chọn hoa hồng trắng, baby và kỹ thuật xoắn cành spiral technique chuẩn châu Âu trong video thực tế.',
+      content: 'Trải nghiệm tự tay làm bó hoa cưới cho người thân:\n- Chuẩn bị: 15 cành hồng kem pastel, 1 bó baby trắng và ruy băng lụa.\n- Kỹ thuật xoắn cành spiral: Đặt cành hoa theo góc nghiêng một chiều.\n- Thắt nơ đôi sang trọng và bảo quản trong phòng mát 22-24°C.',
+      image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=800&auto=format&fit=crop',
+      category: 'Trải nghiệm video',
+      author: 'Master Florist Hoàng An',
+      createdAt: '2026-11-09',
+      readTime: '6 phút xem',
+      hasVideo: true
+    },
+    {
+      id: 4,
+      title: 'Top 5 loài hoa để bàn mang lại tài lộc và bình an cho góc làm việc',
+      summary: 'Khám phá những loài hoa tươi giúp giải tỏa căng thẳng công việc, thanh lọc năng lượng tích cực và kích thích tư duy sáng tạo.',
+      content: 'Đặt một lọ hoa nhỏ trên bàn làm việc giúp tăng 30% hiệu suất làm việc:\n1. Lan Hồ Điệp mini: Sang trọng và tươi lâu trên 1 tháng.\n2. Cúc Tana: Bình yên và giải tỏa căng thẳng.\n3. Hoa Cát Tường: Thu hút may mắn trong các dự án mới.',
+      image: 'https://images.unsplash.com/photo-1457089328109-e5d9bd499191?w=800&auto=format&fit=crop',
+      category: 'Cẩm nang hoa',
+      author: 'Minh Thảo Flower',
+      createdAt: '2026-11-06',
+      readTime: '3 phút đọc'
+    },
+    {
+      id: 5,
+      title: '[Video] Trải nghiệm Workshop cắm hoa nghệ thuật cuối tuần tại BHShop Studio',
+      summary: 'Cùng hòa mình vào không gian ngập tràn sắc hoa và tự tay sáng tạo giỏ hoa tone màu pastel dịu dàng.',
+      content: 'Buổi Workshop Chạm Vào Thiên Nhiên diễn ra vô cùng ấm cúng:\n- Học kỹ năng phối màu hoa từ Florist chuyên nghiệp.\n- Tự tay hoàn thiện một giỏ hoa nghệ thuật mang về tặng gia đình.',
+      image: 'https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=800&auto=format&fit=crop',
+      category: 'Trải nghiệm video',
+      author: 'BHShop Studio',
+      createdAt: '2026-11-03',
+      readTime: '4 phút xem',
+      hasVideo: true
+    },
+    {
+      id: 6,
+      title: 'Gợi ý chọn hoa kỷ niệm ngày yêu theo từng cột mốc ý nghĩa',
+      summary: 'Mỗi năm bên nhau là một dấu ấn tình yêu thiêng liêng. Hãy để bó hoa tươi thay lời thì thầm ngọt ngào gửi gắm đến người ấy.',
+      content: 'Mỗi mốc thời gian lại mang một ý nghĩa:\n- Năm thứ 1: Bó hoa hồng phấn e ấp như thuở ban đầu.\n- Năm thứ 3: Hoa Tulip đỏ tượng trưng cho sự gắn bó.\n- Năm thứ 5: 99 bông hồng đỏ thắm minh chứng cho tình yêu son sắt.',
+      image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800&auto=format&fit=crop',
+      category: 'Xu hướng quà tặng',
+      author: 'Florist Linh Trang',
+      createdAt: '2026-10-28',
+      readTime: '3 phút đọc'
+    }
+  ];
+
+  let currentCategory = 'Tất cả';
+  let currentSearch = '';
+
+  function renderArticles() {
+    const filtered = articlesList.filter(item => {
+      const matchCat = currentCategory === 'Tất cả' || item.category === currentCategory;
+      const matchSearch = !currentSearch ||
+        item.title.toLowerCase().includes(currentSearch.toLowerCase()) ||
+        item.summary.toLowerCase().includes(currentSearch.toLowerCase());
+      return matchCat && matchSearch;
+    });
+
+    const grid = document.getElementById('articlesGrid');
+    const title = document.getElementById('listTitle');
+    title.innerText = `📚 Danh Sách Bài Viết (${filtered.length})`;
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div style="text-align:center; padding:30px; background:white; border-radius:12px;">🍃 Không tìm thấy bài viết phù hợp.</div>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map(item => `
+      <article class="article-box">
+        <div class="article-box-image">
+          <img src="${item.image}" alt="${item.title}">
+          <span class="box-category">${item.category}</span>
+          ${item.hasVideo ? '<span class="box-video-tag">▶ Video</span>' : ''}
+        </div>
+        <div class="article-box-content">
+          <div class="article-box-meta">
+            <span>📅 ${item.createdAt}</span>
+            <span>⏱ ${item.readTime}</span>
+          </div>
+          <h3 class="article-box-title">${item.title}</h3>
+          <p class="article-box-summary">${item.summary}</p>
+          <div class="article-box-footer">
+            <span class="box-author">✍ ${item.author}</span>
+            <button class="btn-read-quick" onclick="openModalById(${item.id})">Đọc nhanh →</button>
+          </div>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  function setCategory(cat, btn) {
+    currentCategory = cat;
+    document.querySelectorAll('.category-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderArticles();
+  }
+
+  document.getElementById('searchInput').addEventListener('input', function(e) {
+    currentSearch = e.target.value.trim();
+    renderArticles();
+  });
+
+  function openModalById(id) {
+    const item = articlesList.find(a => a.id === id);
+    if (!item) return;
+
+    document.getElementById('modalImg').src = item.image;
+    document.getElementById('modalMeta').innerText = `📅 ${item.createdAt} • ⏱ ${item.readTime} • ✍ ${item.author}`;
+    document.getElementById('modalTitle').innerText = item.title;
+    document.getElementById('modalDesc').innerText = item.content;
+    document.getElementById('articleModal').classList.add('show');
+  }
+
+  function closeModal() {
+    document.getElementById('articleModal').classList.remove('show');
+  }
+
+  // Khởi chạy render ban đầu
+  renderArticles();
+</script>
+</body>
+</html>
