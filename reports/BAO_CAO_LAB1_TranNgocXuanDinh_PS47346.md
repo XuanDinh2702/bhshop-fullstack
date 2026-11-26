@@ -24,7 +24,6 @@
    - 4.2. [Quản lý trạng thái bằng Signal & Computed](#42-quản-lý-trạng-thái-bằng-signal--computed)
 5. [Kiểm tra và đóng gói](#5-kiểm-tra-và-đóng-gói)
 6. [Khó khăn và hướng phát triển](#6-khó-khăn-và-hướng-phát-triển)
-7. [Kết luận](#7-kết-luận)
 
 ---
 
@@ -276,13 +275,5 @@ Dự án được kiểm tra nghiêm ngặt qua các quy trình tiêu chuẩn c�
 * **Lab 4 / ASM 1:** Kết nối API backend Node.js / Express / MongoDB, xây dựng giỏ hàng lưu `localStorage` và quy trình đặt hàng hoàn chỉnh.
 
 ---
-
-## 7. Kết luận
-
-Bài thực hành **Lab 1** đã hoàn thành 100% mục tiêu đề ra:
-- Cài đặt thành công môi trường Node.js và Angular CLI trên ổ `D:`.
-- Nắm vững quy trình sinh Component chuẩn Standalone bằng Angular CLI.
-- Tổ chức cấu trúc mã nguồn dự án thương mại điện tử **BHShop** chuyên nghiệp, bài bản.
-- Áp dụng thành công cơ chế giao tiếp cha - con hiện đại với `input()`, `output()` và quản lý dữ liệu phản ứng với Angular Signals.
 
 *Xác nhận của sinh viên:* **Trần Ngọc Xuân Đình – MSSV: PS47346**

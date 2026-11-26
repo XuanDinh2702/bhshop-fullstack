@@ -29,7 +29,6 @@
 6. [Kết quả kiểm thử](#6-kết-quả-kiểm-thử)
 7. [Đối chiếu yêu cầu bài Lab 2](#7-đối-chiếu-yêu-cầu-bài-lab-2)
 8. [Cách chạy dự án](#8-cách-chạy-dự-án)
-9. [Kết luận](#9-kết-luận)
 
 ---
 
@@ -444,12 +443,5 @@ flowchart TD
 4. Truy cập trình duyệt: `http://localhost:4200/`
 
 ---
-
-## 9. Kết luận
-
-Bài thực hành **Lab 2** đã ứng dụng trọn vẹn những công nghệ tiên tiến nhất của Angular thế hệ mới:
-- Cơ chế quản lý dữ liệu phản ứng với **Signals** giúp mã nguồn ngắn gọn, tường minh, không cần quản lý vòng đời subscription phức tạp của RxJS.
-- Cú pháp Control Flow `@for`, `@empty`, `@if` giúp template HTML sạch sẽ, dễ bảo trì và đạt hiệu năng tối đa.
-- Giao diện người dùng được trau chuốt tỉ mỉ, hỗ trợ hoàn hảo trải nghiệm mua sắm hoa tươi trên thiết bị di động.
 
 *Xác nhận của sinh viên:* **Trần Ngọc Xuân Đình – MSSV: PS47346**

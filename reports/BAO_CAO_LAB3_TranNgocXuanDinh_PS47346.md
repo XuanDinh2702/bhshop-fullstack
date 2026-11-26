@@ -35,7 +35,6 @@
    - 6.2. [Flow hiển thị Trang sản phẩm (Products Flow)](#62-flow-hiển-thị-trang-sản-phẩm-products-flow)
 7. [Kết quả kiểm thử](#7-kết-quả-kiểm-thử)
 8. [Hướng dẫn chạy chương trình](#8-hướng-dẫn-chạy-chương-trình)
-9. [Kết luận](#9-kết-luận)
 
 ---
 
@@ -555,13 +554,5 @@ flowchart TD
    - **Trang bộ sưu tập hoa tươi:** `http://localhost:4200/products`
 
 ---
-
-## 9. Kết luận
-
-Bài thực hành **Lab 3** đã hiện thực hóa trọn vẹn mô hình ứng dụng hiện đại **Single Page Application (SPA)**:
-- Nắm vững bản chất, cơ chế hoạt động và cách tối ưu hóa hiệu năng giữa `component` và `loadComponent` trong **Angular Router**.
-- Tổ chức dữ liệu mảng có cấu trúc, sử dụng **Computed Signals** để tự động suy luận danh sách bài viết mới nhất một cách thanh lịch và tối ưu.
-- Xây dựng thành công trang sáng tạo đa phương tiện kết hợp bài viết, video workshop và sản phẩm hoa tươi tương tác cao.
-- Toàn bộ dự án tuân thủ nghiêm ngặt chuẩn kiến trúc **Standalone Component** và các thực hành tốt nhất (best practices) của Angular 20+.
 
 *Xác nhận của sinh viên:* **Trần Ngọc Xuân Đình – MSSV: PS47346**

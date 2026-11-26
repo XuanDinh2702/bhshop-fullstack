@@ -12,7 +12,6 @@
 * **Sinh viên thực hiện (SVTH):** Trần Ngọc Xuân Đình
 * **Mã số sinh viên (MSSV):** PS47346
 * **Lớp:** WD19301 / WEB105
-* **Mức độ hoàn thành:** **Mức Xuất Sắc / Giỏi (100% Yêu cầu + Mức Khá Search API + Mức Giỏi Cart LocalStorage)**
 * **Năm học:** TPHCM – 2026
 
 ---
@@ -35,7 +34,6 @@
 6. [Những "Cái bẫy" lỗi thường gặp & Cách xử lý](#6-những-cái-bẫy-lỗi-thường-gặp--cách-xử-lý)
 7. [Hướng dẫn Triển khai Cloud (Vercel & Render.com)](#7-hướng-dẫn-triển-khai-cloud-vercel--rendercom)
 8. [Kết quả kiểm thử & Đối chiếu yêu cầu](#8-kết-quả-kiểm-thử--đối-chiếu-yêu-cầu)
-9. [Kết luận](#9-kết-luận)
 
 ---
 
@@ -421,23 +419,16 @@ git push -u origin main
 
 | STT | Yêu cầu bài Lab 4 & Assignment 1 | Kết quả thực tế của sinh viên | Đánh giá |
 | :---: | :--- | :--- | :---: |
-| **1** | Xây dựng backend MongoDB tối thiểu 2 bảng | Xây dựng 4 bảng đầy đủ: `categories`, `products`, `blogs`, `banners` | **Đạt xuất sắc** |
+| **1** | Xây dựng backend MongoDB tối thiểu 2 bảng | Xây dựng 4 bảng đầy đủ: `categories`, `products`, `blogs`, `banners` | **Đạt (Hoàn thành)** |
 | **2** | Bắt buộc có thuộc tính `slug` cho mỗi bảng | 100% các bảng đều có trường `slug` unique và index chuẩn | **Đạt** |
 | **3** | Xây dựng API trang chủ gom banner, new, sale, bestseller | Hoàn thiện API `GET /api/home` gom đủ dữ liệu 1 request | **Đạt** |
 | **4** | Frontend tải đầy đủ các section trang chủ | Hiển thị mượt mà: Banner slider, danh mục hoa, 3 khối sản phẩm, bài viết | **Đạt** |
 | **5** | Điều hướng router theo slug `/category/:slug` và `/product/:slug` | Điều hướng chuẩn SPA không reload, dùng `paramMap.subscribe` | **Đạt** |
-| **6** | **Mức Khá:** Tìm kiếm theo tên hoa trên thanh Header | Hoàn thiện API `/api/products?search=...` kết hợp dropdown gợi ý realtime | **Đạt** |
-| **7** | **Mức Giỏi:** Chức năng Giỏ hàng LocalStorage trang `/cart` | Lưu giỏ hàng, tăng giảm số lượng, xóa món, tính tiền tự động qua Signals | **Đạt** |
+| **6** | Tìm kiếm theo tên hoa trên thanh Header | Hoàn thiện API `/api/products?search=...` kết hợp dropdown gợi ý realtime | **Đạt** |
+| **7** | Chức năng Giỏ hàng LocalStorage trang `/cart` | Lưu giỏ hàng, tăng giảm số lượng, xóa món, tính tiền tự động qua Signals | **Đạt** |
 | **8** | Bố cục chuẩn Mobile-First (tối đa 430px) | Giao diện hiển thị hoàn mỹ trên iPhone 15 Pro Max và cả màn hình Desktop | **Đạt** |
 | **9** | Chuẩn bị triển khai Vercel & Render.com | Có file `vercel.json`, cấu hình CORS, biến môi trường `.env` đầy đủ | **Đạt** |
 
 ---
-
-## 9. Kết luận
-
-Dự án **BHShop** trong bài **Lab 4 & Assignment 1** đã thể hiện trọn vẹn tư duy của một lập trình viên Full-stack chuyên nghiệp:
-- Làm chủ kiến trúc **Client - Server**, nắm vững cách thức vận hành của RESTful API và cơ sở dữ liệu NoSQL đám mây MongoDB Atlas.
-- Khai thác tối đa sức mạnh phản ứng của **Angular Signals**, đem lại hiệu suất render cực nhanh và trải nghiệm người dùng liền mạch.
-- Tối ưu hóa cấu trúc đường dẫn **SEO Slug** và xây dựng chức năng giỏ hàng thương mại điện tử hoàn chỉnh.
 
 *Xác nhận của sinh viên:* **Trần Ngọc Xuân Đình – MSSV: PS47346**
